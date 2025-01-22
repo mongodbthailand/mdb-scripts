@@ -1,0 +1,62 @@
+const query = {
+    "mappings": {
+        "fields": {
+        "data": {
+            "fields": {
+            "company": {
+                "analyzer": "stopwordRemover",
+                "type": "string"
+            }
+            },
+            "type": "document"
+        }
+        }
+    },
+    "analyzers": [
+        {
+            "charFilters": [],
+            "name": "stopwordRemover",
+            "tokenFilters": [
+                {
+                "tokens": [
+                    "Limited",
+                    "Pte Ltd",
+                    "Inc."
+                ],
+                "type": "stopword"
+                }
+            ],
+            "tokenizer": {
+                "type": "whitespace"
+            }
+        }
+    ]
+}
+//
+db.getSiblings("test")
+  .getCollection("table")
+  .aggregate([
+    {
+      $search: {
+        index: "default",
+        pharse: {
+          query: "Other Joint Stock Company",
+          path: "data",
+        },
+      },
+    },
+  ]);
+//
+db.getSiblings("test")
+  .getCollection("table")
+  .aggregate([
+    {
+      $search: {
+        index: "company",
+        text: {
+          query: "Thomas Ng",
+          path: "data",
+        },
+      },
+    },
+  ]);
