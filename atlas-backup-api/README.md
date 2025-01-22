@@ -1,1 +1,0 @@
-Creating API Key: [click](https://www.mongodb.com/docs/atlas/configure-api-access/)
