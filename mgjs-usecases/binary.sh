@@ -1,0 +1,1 @@
+mgeneratejs '{"user_id":{"$integer":{"min":10000,"max":99999}},"type":{"$choose":{"from":["login","click"]}},"time":{"$date":{"min":"2022-01-01","max":"2022-10-07"}},"event_data":{"$binary":{"length":100}}}' -n 1 | jq '. | .event_data.base64=.event_data."$binary" | .event_data.subType=.event_data."$type" | del(.event_data."$type", .event_data."$binary")'
